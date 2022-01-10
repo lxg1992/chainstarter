@@ -1,4 +1,9 @@
+// node_modules
 import React, { useEffect, useState } from 'react';
+import { Card } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
+
+// project
 import factory from '../ethereum/factory';
 
 export async function getServerSideProps(ctx) {
@@ -8,14 +13,26 @@ export async function getServerSideProps(ctx) {
 }
 
 export default ({ campaigns }) => {
+  const renderCampaigns = () => {
+    const items = campaigns.map((address) => {
+      return {
+        header: address,
+        description: <a>View Campaign</a>,
+        fluid: true,
+      };
+    });
+
+    return <Card.Group items={items} />;
+  };
+
   return (
-    <h1>
-      {campaigns &&
-        campaigns.map((camp, key) => (
-          <div key={key}>
-            {key}:{camp}
-          </div>
-        ))}
-    </h1>
+    <div>
+      <link
+        async
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css"
+      />
+      {renderCampaigns()}
+    </div>
   );
 };
