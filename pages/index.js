@@ -2,18 +2,21 @@ import React, { useEffect, useState } from 'react';
 import useAsyncEffect from 'use-async-effect';
 import factory from '../ethereum/factory';
 
-export default () => {
-  useAsyncEffect(
-    async (isMounted) => {
-      console.log('mount');
-      const campaign = await factory.methods.getDeployedCampaigns().call();
-      if (!isMounted()) {
-        return;
-      }
-    },
-    () => console.log('unmount'),
-    []
-  );
+export async function getServerSideProps(ctx) {
+  const campaigns = await factory.methods.getDeployedCampaigns().call();
 
-  return <h1>This is the index page!!!</h1>;
+  return { props: { campaigns } };
+}
+
+export default ({ campaigns }) => {
+  return (
+    <h1>
+      {campaigns &&
+        campaigns.map((camp, key) => (
+          <div key={key}>
+            {key}:{camp}
+          </div>
+        ))}
+    </h1>
+  );
 };
