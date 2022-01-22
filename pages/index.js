@@ -1,10 +1,13 @@
 // node_modules
 import React, { useEffect, useState } from 'react';
-import { Card } from 'semantic-ui-react';
+import { Card, Button } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
-// project
+// crypto
 import factory from '../ethereum/factory';
+
+// react
+import Layout from '../components/Layout';
 
 export async function getServerSideProps(ctx) {
   const campaigns = await factory.methods.getDeployedCampaigns().call();
@@ -26,13 +29,22 @@ export default ({ campaigns }) => {
   };
 
   return (
-    <div>
-      <link
-        async
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css"
-      />
-      {renderCampaigns()}
-    </div>
+    <Layout>
+      <div>
+        <link
+          async
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css"
+        />
+        <h3>Open Campaigns</h3>
+        <Button
+          content="Create Campaign"
+          icon="add circle"
+          primary
+          floated="right"
+        />
+        {renderCampaigns()}
+      </div>
+    </Layout>
   );
 };
