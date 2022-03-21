@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Button, Input, Message } from 'semantic-ui-react';
 
+import { Router } from '../../routes';
+
 import Layout from '../../components/Layout';
 import factory from '../../ethereum/factory';
 import web3 from '../../ethereum/web3';
@@ -25,8 +27,8 @@ const CampaignNew = () => {
     } catch (err) {
       setErrorMessage(err.message);
     }
-
     setIsLoading(false);
+    Router.pushRoute('/');
   };
 
   return (

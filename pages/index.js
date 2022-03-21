@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { Card, Button } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
+import { Link } from '../routes';
+
 // crypto
 import factory from '../ethereum/factory';
 
@@ -20,7 +22,11 @@ export default ({ campaigns }) => {
     const items = campaigns.map((address) => {
       return {
         header: address,
-        description: <a>View Campaign</a>,
+        description: (
+          <Link route={`/campaigns/${address}`}>
+            <a>View Campaign</a>
+          </Link>
+        ),
         fluid: true,
       };
     });
@@ -32,12 +38,16 @@ export default ({ campaigns }) => {
     <Layout>
       <div>
         <h3>Open Campaigns</h3>
-        <Button
-          content="Create Campaign"
-          icon="add circle"
-          primary
-          floated="right"
-        />
+        <Link route="/campaigns/new">
+          <a>
+            <Button
+              content="Create Campaign"
+              icon="add circle"
+              primary
+              floated="right"
+            />
+          </a>
+        </Link>
         {renderCampaigns()}
       </div>
     </Layout>

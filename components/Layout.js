@@ -16,7 +16,6 @@ const Layout = ({ children }) => {
       </Head>
       <Header />
       {children}
-      <h1>I'm a footer</h1>
     </Container>
   );
 };
