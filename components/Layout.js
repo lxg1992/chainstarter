@@ -3,6 +3,7 @@ import { Container } from 'semantic-ui-react';
 import Head from 'next/head';
 
 import Header from '../components/Header';
+import ContributeForm from './ContributeForm';
 
 const Layout = ({ children }) => {
   return (
