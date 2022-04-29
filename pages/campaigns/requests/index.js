@@ -10,6 +10,7 @@ export async function getServerSideProps(ctx) {
   const { address } = ctx.query;
   const campaign = Campaign(address);
   const requestCount = await campaign.methods.getRequestCount().call();
+  const approversCount = await campaign.methods.approversCount().call();
 
   const requests = await Promise.all(
     Array(parseInt(requestCount))
@@ -24,6 +25,7 @@ export async function getServerSideProps(ctx) {
       address,
       requests: JSON.parse(JSON.stringify(requests)),
       requestCount,
+      approversCount,
     },
   };
 }
@@ -39,6 +41,7 @@ const RequestIndex = (props) => {
           request={request}
           key={idx}
           address={props.address}
+          approversCount={props.approversCount}
         />
       );
     });
@@ -49,7 +52,9 @@ const RequestIndex = (props) => {
       <h3>Request List</h3>
       <Link route={`/campaigns/${props.address}/requests/new`}>
         <a>
-          <Button primary>Add Request</Button>
+          <Button floated="right" style={{ marginBottom: 10 }} primary>
+            Add Request
+          </Button>
         </a>
       </Link>
       <Table>
@@ -66,6 +71,12 @@ const RequestIndex = (props) => {
         </Header>
         <Body>{renderRows()}</Body>
       </Table>
+      <div>
+        Found{' '}
+        {props.requestCount === 1
+          ? `${props.requestCount} requests`
+          : `${props.requestCount} request`}
+      </div>
     </Layout>
   );
 };
